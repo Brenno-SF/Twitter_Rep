@@ -6,7 +6,7 @@ USE app;
 CREATE TABLE Users (
     id_user INT PRIMARY KEY AUTO_INCREMENT,
     user_name VARCHAR(64) UNIQUE,
-    hash_password VARCHAR(64) NOT NULL /* Trocar posteriormente */,
+    hash_password VARCHAR(64) NOT NULL,
     created_at DATE DEFAULT(CURDATE())
 );
 
