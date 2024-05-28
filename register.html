@@ -9,27 +9,45 @@
 </head>
 <body class="d-flex align-items-center py-4 bg-body-tertiary">
     <main class="w-100 m-auto form-container">
+        
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Form</title>
+</head>
+<body>
+    <form action="/register" method="post" id="registerForm">
         <h1 class="h3 mb-3 fw-normal">Register</h1>
         <div class="form-floating">
-            <input type="text" class="form-control" id="floatingInput" placeholder="your full name"/>
-            <label for="floatingInput">Name</label>
+            <input type="text" class="form-control" id="name" placeholder="your full name"/>
+            <label for="name">Name</label>
         </div>
         <div class="form-floating">
-            <input type="date" class="form-control" id="floatingInput" placeholder="your full name"/>
-            <label for="floatingInput">Dat of Birth</label>
+            <input type="date" class="form-control" id="dob" placeholder="your date of birth"/>
+            <label for="dob">Date of Birth</label>
         </div>
         <div class="form-floating">
-            <input type="text" class="form-control" id="floatingInput" placeholder="your_User"/>
-            <label for="floatingInput">User</label>
+            <input type="text" class="form-control" id="username" placeholder="your_User"/>
+            <label for="username">User</label>
         </div>
         <div class="form-floating">
-            <input type="email" class="form-control" id="floatingInput" placeholder="your_emall@example.com"/>
-            <label for="floatingInput">E-mail</label>
+            <input type="email" class="form-control" id="email" placeholder="your_email@example.com"/>
+            <label for="email">E-mail</label>
         </div>
-        <div class="form-floating ">
-            <input type="password" class="form-control" id="floatingInput" placeholder="password"/>
-            <label for="floatingInput">Password</label>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="password" placeholder="password"/>
+            <label for="password">Password</label>
         </div>
+        <button type="submit">Register</button>
+    </form>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+        
         
         <button class="btn-primary w-100 py-2 my-3">Register</button>
         <a href="register.html">Already have an account? Log in now!</a>
