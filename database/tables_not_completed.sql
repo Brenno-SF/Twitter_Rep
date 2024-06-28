@@ -1,7 +1,6 @@
 -- Active: 1715561308869@@127.0.0.1@3306@app
-CREATE DATABASE app;
 
-USE app;
+use app;
 
 CREATE TABLE Users (
     id_user INT PRIMARY KEY AUTO_INCREMENT,

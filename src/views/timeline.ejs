@@ -25,23 +25,20 @@
         <button class="sidebar_post">Post</button>
     </div>
    
-
-    
-    <form action="/timeline" method="post" id="text"> <!--Feed-->
     <div class="feed">
         <div class="feed_header">
             <h3>Home</h3>
         </div>
         <div class="postBox"> 
             <!--Post New Thought-->
-                <div class="inputPost">
-                    <img src="imgs/WhatsApp Image 2024-04-05 at 11.08.49.jpeg" alt="">
-                    <input type="text" placeholder="Whassup?">
-                </div>
-                <button class="postBox_post">Post</button>
-            </form>
+            <div class="inputPost">
+                <img src="imgs/WhatsApp Image 2024-04-05 at 11.08.49.jpeg" alt="">
+                <input type="text" placeholder="Whassup?">
+            </div>
+            <button class="postBox_post">Post</button>
         </div>
         
+        <% data.forEach(item => { %>
         <div class="postTimeline">
             <div class="postTlAvatar">
                 <img src="imgs/avatar.jpg" alt="">
@@ -49,19 +46,20 @@
             <div class="post_body">
                 <div class="post_header">
                     <div class="post_headerText">
-                        <h3>Silvia Pereira</h3>
+                        <h3><%= item.user_name %></h3>
                     </div>
                     <div class="postHeader_Description">
-                         <p>Consequat officia ipsum ut minim sit enim adipisicing reprehenderit ipsum.</p>
+                        <p><%= item.content %></p>
+                        <small><%= item.date %></small>
                     </div>
                 </div>
-                <!-- <img src="imgs/imgpost.jpeg" alt="foto de um rapaz muito gostoso"> -->
             </div>
         </div>
+        <% }); %>
     </div>
-    <div class="widgets">
+    <!-- <div class="widgets">
         <h3>nothing yet</h3>
-    </div>
+    </div> -->
     <script src="./src/server.js"></script>
 </body>
 </html>
