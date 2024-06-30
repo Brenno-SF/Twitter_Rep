@@ -1,14 +1,24 @@
 const express = require("express");
 const path = require("path");
 const { connection } = require("./connection"); // Importando a conexão existente
+const { builtinModules } = require("module");
+const { Console } = require("console");
+const session = require('express-session');
 const app = express();
 const port = 3357;
+
+app.use(session({
+  secret: '1307',
+  resave: false,
+  saveUninitialized: true
+}));
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 const insert = "INSERT INTO Users (user_name, hash_password) VALUES (?, ?)";
 const insertE = "INSERT INTO emails (email,fk_user) VALUES (?,? )";
 const selectUser = "SELECT * FROM Users WHERE user_name = ?";
+const insertPost = "INSERT INTO Thoughts (content, fk_user) VALUES (?, ?)";
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -62,7 +72,7 @@ app.post("/login", (request, response) =>{
       const user = result[0];
       
       if (password === user.hash_password) {
-        // request.session.userId = user.id_user;
+        request.session.userId = user.id_user;
         response.redirect("/timeline");
       } else {
         response.send("Usuário ou senha incorretos.");
@@ -90,6 +100,30 @@ app.get('/timeline', (req, res) => {
     res.render('timeline', { data: data });
   });
 });
+
+app.post('/timeline', (request, res)=>{
+  console.log("test");
+  const {content} = request.body;
+  const userId = request.session.userId;
+  console.log("Dados recebidos:", content, userId);
+
+
+  if (!userId) {
+    return res.status(401).send("Usuário não autorizado.");
+  }
+  connection.query(insertPost,[content, userId],(err, result)=> {
+    if(err){
+      console.log(err);
+      return;
+    }
+    if (result) {
+      console.log(result);
+      res.redirect('/timeline');
+    }
+    
+  })
+})
+
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
