@@ -7,6 +7,7 @@ const session = require('express-session');
 const app = express();
 const port = 3357;
 
+//sessão pra salvar userId
 app.use(session({
   secret: '1307',
   resave: false,
@@ -73,6 +74,7 @@ app.post("/login", (request, response) =>{
       
       if (password === user.hash_password) {
         request.session.userId = user.id_user;
+        request.session.username = user.user_name;
         response.redirect("/timeline");
       } else {
         response.send("Usuário ou senha incorretos.");
@@ -97,7 +99,7 @@ app.get('/timeline', (req, res) => {
       return ;
     }
 
-    res.render('timeline', { data: data });
+    res.render('timeline', { data: data, username: req.session.username});
   });
 });
 
