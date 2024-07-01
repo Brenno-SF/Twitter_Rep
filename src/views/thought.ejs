@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        thought: <%= thought.content%>
+        
+        <form action="/update/<%= thought.id_thought %>" method="post" id="update">
+            <input form="update" name="content">
+            <button type="submit">Edit this thought</button>
+        </form>
+        <form action="/delete/<%= thought.id_thought %>" method="post">
+            <button>Delete this thought</button>
+        </form>
+    </div>
+</body>
+</html>

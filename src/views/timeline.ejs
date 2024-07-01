@@ -10,19 +10,25 @@
 </head>
 <body class="bSidebar d-flex align-items-center py-4 bg-body-tertiary">
     <div class="sidebar">
-        <div class="sidebarOption active">
-            <span class="material-symbols-outlined">home</span>
-            <h3>Home</h3>
-        </div>
-        <div class="sidebarOption">
-            <span class="material-symbols-outlined">search</span>
-            <h3>Search</h3>
-        </div>
-        <div class="sidebarOption">
-            <span class="material-symbols-outlined">person</span>
-            <h3>Profile</h3>
-        </div>
-        <button class="sidebar_post">Post</button>
+
+        <form action="/profile" method="get">
+
+            <div class="sidebarOption active">
+                <span class="material-symbols-outlined">home</span>
+                <h3>Home</h3>
+            </div>
+            <div class="sidebarOption">
+                <span class="material-symbols-outlined">search</span>
+                <h3>Search</h3>
+            </div>
+            <div class="sidebarOption">
+                <span class="material-symbols-outlined">person</span>
+                <!-- <h3>Profile</h3> -->
+                <button>Profile</button>
+            </div>
+            <button class="sidebar_post">Post</button>
+        </form>
+
     </div>
    
     <div class="feed">

@@ -1,3 +1,6 @@
+require("dotenv").config();
+
+const pass = process.env.PASSWORD;
 // Get the client
 const mysql = require("mysql2");
 
@@ -6,7 +9,7 @@ const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
   database: "app",
-  password: "",
+  password: pass,
 });
 
 module.exports = { connection };
