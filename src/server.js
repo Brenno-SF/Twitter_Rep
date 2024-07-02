@@ -7,7 +7,7 @@ const session = require('express-session');
 const app = express();
 const port = 3357;
 
-//sessão pra salvar userId
+//sessão pra salvar os dados
 app.use(session({
   secret: '1307',
   resave: false,
