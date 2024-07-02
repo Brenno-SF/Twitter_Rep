@@ -8,11 +8,13 @@ const app = express();
 const port = 3357;
 
 //sessão pra salvar os dados
-app.use(session({
-  secret: '1307',
-  resave: false,
-  saveUninitialized: true
-}));
+app.use(
+  session({
+    secret: "1307",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -20,11 +22,13 @@ const insert = "INSERT INTO users (user_name, hash_password) VALUES (?, ?)";
 const insertElement = "INSERT INTO emails (email,fk_user) VALUES (?,? )";
 const selectUser = "SELECT * FROM users WHERE user_name = ?";
 const insertPost = "INSERT INTO thoughts (content, fk_user) VALUES (?, ?)";
-const getThoughts = "SELECT * FROM thoughts WHERE fk_user = (?) order by id_thought desc"; // Change this later
+const getThoughts =
+  "SELECT * FROM thoughts WHERE fk_user = (?) order by id_thought desc";
 const getSpecificThought = "SELECT * from thoughts WHERE id_thought = (?)";
 const deleteSpecificThought = "DELETE FROM thoughts WHERE id_thought = (?)";
 const updateThought =
   "UPDATE thoughts SET content = (?) WHERE id_thought = (?)";
+const getThoughtLike = "SELECT * FROM thoughts WHERE content LIKE ? ";
 let idUser;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -118,6 +122,7 @@ app.post("/timeline", (request, res) => {
   connection.query(insertPost, [content, userId], (err, result) => {
     if (err) {
       console.log(err);
+
       return;
     }
     if (result) {
@@ -128,20 +133,22 @@ app.post("/timeline", (request, res) => {
 });
 app.get("/profile", (request, response) => {
   const thoughts = connection.query(getThoughts, [idUser], (err, result) => {
-    response.render("profile", { thoughts: result, username: request.session.username});
+    response.render("profile", {
+      thoughts: result,
+      username: request.session.username,
+    });
   });
 });
 app.get("/thought/:id", (request, response) => {
   const { id } = request.params;
   const thought = connection.query(getSpecificThought, [id], (err, result) => {
-    console.log(result);
     response.render("thought", { thought: result[0] });
   });
 });
 
 app.post("/delete/:id", (request, response) => {
   const { id } = request.params;
-  console.log(id);
+
   const query = connection.query(deleteSpecificThought, [id], (err, result) => {
     if (err) return console.error(err);
   });
@@ -158,8 +165,24 @@ app.post("/update/:id", (request, response) => {
     }
   );
 });
-app.get("/search", (request, response) => {});
 
+const get =
+  "select content, user_name from thoughts, users where content like ? AND fk_user = id_user";
+app.get("/search", (request, response) => {
+  const { content } = request.query;
+  console.log(content);
+  connection.query(get, [`%${content}%`], (err, data) => {
+    if (err) {
+      console.error("Erro ao buscar dados:", err);
+      return;
+    }
+    console.log(data);
+    response.render("search", {
+      data: data,
+      username: request.session.username,
+    });
+  });
+});
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });

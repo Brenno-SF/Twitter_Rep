@@ -14,7 +14,7 @@
             <h3>Edit or Delete Thought</h3>
         </div>
         <div class="form-container">
-            <p>Thought: "<%= thought.content %>"</p>
+            <p>Thought: <%= thought.content %></p>
             <form action="/update/<%= thought.id_thought %>" method="post" id="update">
                 <input form="update" name="content" class="form-control" placeholder="Update your thought" required>
                 <button type="submit" class="btn btn-primary w-50 py-1">Edit this thought</button>

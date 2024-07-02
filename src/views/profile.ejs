@@ -43,7 +43,7 @@
                                     </div>
                                     <div class="postHeader_Description">
                                         <p><%= thoughts[i].content %></p>
-                                        <sup><%= thoughts[i].created_at%></sup>
+                                        <sup><%= new Date(thoughts[i].created_at).toDateString()%></sup>
                                     </div>
                                 </div>
                                 <form action="/thought/<%= thoughts[i].id_thought %>" method="get">

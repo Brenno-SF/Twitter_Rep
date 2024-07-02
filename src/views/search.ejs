@@ -11,14 +11,14 @@
 <body class="bSidebar d-flex align-items-center py-4 bg-body-tertiary">
     <div class="container">
         <div class="sidebar">
-            <button class="sidebarButton active"> <span class="material-symbols-outlined">home</span> Home</button>
+            <button class="sidebarButton"> <span class="material-symbols-outlined">home</span> Home</button>
             <form action="/profile" method="get">
                 <button class="sidebarButton"> <span class="material-symbols-outlined">person</span> Profile</button>                
             </form>
             <!-- bglh de pesquisar aqui -->
             <form action="/search" method="get">
                  
-                <button class="sidebarButton"><span class="material-symbols-outlined">search</span> Search</button>
+                <button class="sidebarButton active"><span class="material-symbols-outlined">search</span> Search</button>
             </form>
             
             <form action="\login" method="get">
@@ -29,7 +29,7 @@
         <div class="feed">
             <div class="feed_header">
                 <h2>Home</h2>
-                <h5>Olá, <%= username %>!</h5>
+                <h5>Olá, <%= data.username %>!</h5>
             </div>
             <div class="feed_header">
                 <h3>Thoughts:</h3>
@@ -56,10 +56,10 @@
         </div>
 
         <div class="inputPost">
-            <form action="/timeline" method="post" id="postForm">
+            <form action="/search" method="get" id="postForm">
                 <img src="imgs/WhatsApp Image 2024-04-05 at 11.08.49.jpeg" alt="">
-                <input type="text" class="form-control" id="content" name="content" placeholder="Whassup?" required>
-                <button type="submit" class="postBox_post">Post</button>
+                <input type="text" class="form-control" id="content" name="content" placeholder="Search" required>
+                <button type="submit" class="postBox_post">Search</button>
             </form>
         </div>
     </div>
