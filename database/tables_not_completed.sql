@@ -25,30 +25,6 @@ CREATE TABLE Emails (
     FOREIGN KEY (fk_user) REFERENCES Users (id_user)
 );
 
-INSERT INTO
-    `Users` (user_name, hash_password)
-VALUES ("@Teste", "Test@Hashing");
-
-INSERT INTO Emails (email, fk_user) VALUES ("test@email.com", 1);
-
-INSERT INTO
-    `Thoughts` (content, fk_user)
-VALUES ('Pensamento de teste', 1);
-
-UPDATE `Users`
-SET
-    user_name = 'New_user_name'
-WHERE
-    id_user = 1;
-
-UPDATE `Thoughts`
-SET
-    content = 'new content'
-WHERE
-    id_thought = 1;
-
-UPDATE `Emails`
-SET
-    email = 'NewTestEmail@email.com'
-WHERE
-    id_email = 1;
+RENAME TABLE Users TO users,
+Thoughts TO thoughts,
+Emails TO emails;
