@@ -20,7 +20,7 @@ const insert = "INSERT INTO users (user_name, hash_password) VALUES (?, ?)";
 const insertElement = "INSERT INTO emails (email,fk_user) VALUES (?,? )";
 const selectUser = "SELECT * FROM users WHERE user_name = ?";
 const insertPost = "INSERT INTO thoughts (content, fk_user) VALUES (?, ?)";
-const getThoughts = "SELECT * FROM thoughts WHERE fk_user = ?"; // Change this later
+const getThoughts = "SELECT * FROM thoughts WHERE fk_user = (?) order by id_thought desc"; // Change this later
 const getSpecificThought = "SELECT * from thoughts WHERE id_thought = (?)";
 const deleteSpecificThought = "DELETE FROM thoughts WHERE id_thought = (?)";
 const updateThought =
@@ -94,7 +94,7 @@ app.get("/timeline", (req, res) => {
   const selectAllThoughts = `
     SELECT thoughts.*, users.user_name as user_name
     FROM thoughts
-    INNER JOIN users ON thoughts.fk_user = users.id_user order by created_at desc
+    INNER JOIN users ON thoughts.fk_user = users.id_user order by id_thought desc
   `;
 
   connection.query(selectAllThoughts, (err, data) => {
@@ -128,7 +128,7 @@ app.post("/timeline", (request, res) => {
 });
 app.get("/profile", (request, response) => {
   const thoughts = connection.query(getThoughts, [idUser], (err, result) => {
-    response.render("profile", { thoughts: result });
+    response.render("profile", { thoughts: result, username: request.session.username});
   });
 });
 app.get("/thought/:id", (request, response) => {

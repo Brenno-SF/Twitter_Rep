@@ -8,37 +8,47 @@ html, body {
     max-width: 350px;
     padding: 1rem;
 }
-
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 10px;
+}
 .sidebar {
-    margin: 0%;
-    padding: 0%;
-    box-sizing: border-box;  
+    border-right: 1px solid var(--back);
+    flex: 0.01;  /* Sidebar ocupa 20% do container */
+    min-width: 200px;
+    margin-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
-.sidebarOption {
+
+.sidebarButton {
     display: flex;
     align-items: center;
     cursor: pointer;
 }
 
-.sidebarOption .material-icons {
-    padding: 30px;
-}
-
-.sidebarOption h3 {
+.sidebarButton{
+    background-color: transparent ;
+    border: none;
     font-weight: 500;
     font-size: 20px;
-    margin-right: 20px;
+    margin-right:20px;
 }
-
-.sidebarOption:hover {
-    background-color: rgb(185, 194, 201);
+.sidebarButton:hover{
+   background-color: rgb(185, 194, 201);
     border-radius: 40px;
     color: rgb(45, 121, 189);
     transition: color 100ms ease-out; 
 }
 
-.sidebarOption.active {
+.sidebarButton.active {
     color: rgb(45, 121, 189);
 }
 
@@ -70,24 +80,16 @@ html, body {
     padding: 0 10px;
 }
 
-.sidebar {
-    border-right: 1px solid var(--back);
-    flex: 0.2;
-    min-width: 250px;
-    margin-top: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
-}
+
 
 /* feed */
 .feed {
-    flex: 0.5;
     border-right: 1px solid var(--back);
     border-left: 1px solid var(--back);
+    flex: 1;
     min-width: fit-content;
     overflow-y: scroll;
 }
-
 .feed_header {
     position: sticky;
     top: 0;   
@@ -127,6 +129,7 @@ html, body {
 }
 
 .inputPost {
+    flex: 0.4;  /* InputPost ocupa 40% do container */
     display: flex;
     padding: 20px;
 }
@@ -137,6 +140,9 @@ html, body {
     font-size: 20px;
     border: none;
     outline: none;
+    width: 100%;  /* Alarga o campo de entrada para 100% */
+    height: 150px;  /* Aumenta a altura do campo de entrada */
+    padding: 10px;  /* Adiciona padding interno */
 }
 
 .postBox_post {

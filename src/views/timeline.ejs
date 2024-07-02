@@ -9,65 +9,56 @@
     <title>Timeline</title>
 </head>
 <body class="bSidebar d-flex align-items-center py-4 bg-body-tertiary">
-    <div class="sidebar">
-
-        <form action="/profile" method="get">
-
-            <div class="sidebarOption active">
-                <span class="material-symbols-outlined">home</span>
-                <h3>Home</h3>
-            </div>
+    <div class="container">
+        <div class="sidebar">
+            <button class="sidebarButton active"> <span class="material-symbols-outlined">home</span> Home</button>
+            <form action="/profile" method="get">
+                <button class="sidebarButton"> <span class="material-symbols-outlined">person</span> Profile</button>                
+            </form>
             <!-- bglh de pesquisar aqui -->
-            <div class="sidebarOption"> 
-                <span class="material-symbols-outlined">search</span>
-                <h3>Search</h3>
-            </div>
-            <div class="sidebarOption">
-                <button> <span class="material-symbols-outlined">person</span>Profile</button>                
-            </div>
-            <button class="sidebar_post">Post</button>
-        </form>
+            <button class="sidebarButton"><span class="material-symbols-outlined">search</span> Search</button>
+            <form action="\login" method="get">
+                <button class="sidebarButton"><span class="material-symbols-outlined">logout</span> Logout</button>
+            </form>
+        </div>
 
-    </div>
-   
-    <div class="feed">
-        <div class="feed_header">
-            <h3>Home</h3>
-            <p>Olá, <%= username %>!</p>
-        </div>
-        <div class="postBox"> 
-            <!--Post New Thought-->
-            <div class="inputPost">
-                <form action="/timeline" method="post" id="postForm">
-                    <img src="imgs/WhatsApp Image 2024-04-05 at 11.08.49.jpeg" alt="">
-                    <input type="text" class="form-control" id="content" name="content" placeholder="Whassup?" required>
-                    <button type="submit" class="postBox_post">Post</button>
-                </form>
+        <div class="feed">
+            <div class="feed_header">
+                <h2>Home</h2>
+                <h5>Olá, <%= username %>!</h5>
             </div>
-        </div>
-        
-        <% data.forEach(item => { %>
-        <div class="postTimeline">
-            <div class="postTlAvatar">
-                <img src="imgs/avatar.jpg" alt="">
-            </div>
-            <div class="post_body">
-                <div class="post_header">
-                    <div class="post_headerText">
-                        <h3><%= item.user_name %></h3>
-                    </div>
-                    <div class="postHeader_Description">
-                        <p><%= item.content %></p>
-                        <small><%= item.date %></small>
+            <div class="feed_header">
+                <h3>Thoughts:</h3>
+            </div>  
+            
+            <% data.forEach(item => { %>
+            <div class="postTimeline">
+                <div class="postTlAvatar">
+                    <img src="imgs/avatar.jpg" alt="">
+                </div>
+                <div class="post_body">
+                    <div class="post_header">
+                        <div class="post_headerText">
+                            <h3><%= item.user_name %></h3>
+                        </div>
+                        <div class="postHeader_Description">
+                            <p><%= item.content %></p>
+                            <sup><%= item.created_at %></sup>
+                        </div>
                     </div>
                 </div>
             </div>
+            <% }); %>
         </div>
-        <% }); %>
+
+        <div class="inputPost">
+            <form action="/timeline" method="post" id="postForm">
+                <img src="imgs/WhatsApp Image 2024-04-05 at 11.08.49.jpeg" alt="">
+                <input type="text" class="form-control" id="content" name="content" placeholder="Whassup?" required>
+                <button type="submit" class="postBox_post">Post</button>
+            </form>
+        </div>
     </div>
-    <!-- <div class="widgets">
-        <h3>nothing yet</h3>
-    </div> -->
     <script src="./src/server.js"></script>
 </body>
 </html>

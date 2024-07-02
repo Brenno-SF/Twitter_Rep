@@ -10,34 +10,57 @@
     <title>Thoughts</title>
 </head>
 <body class="bSidebar d-flex align-items-center py-4 bg-body-tertiary">
-    <div class="feed">
-        <div class="feed_header">
-            <h3>Profile</h3>
-            <p>Olá, </p>
+    <div class="container">
+        <div class="sidebar">
+
+            <form action="/timeline" method="get">
+                <button class="sidebarButton"> <span class="material-symbols-outlined">home</span> Home</button>
+            </form>
+                <button class="sidebarButton active"> <span class="material-symbols-outlined">person</span> Profile</button>                
+                <!-- bglh de pesquisar aqui -->
+            <button class="sidebarButton"><span class="material-symbols-outlined">search</span> Search</button>
+            <form action="\login" method="get">
+                <button class="sidebarButton"><span class="material-symbols-outlined">logout</span> Logout</button>
+            </form>
+
         </div>
-        <div class="feed_header">
-            <h3>Thoughts</h3>
-        </div>
-        <div class="postBox">
-            <ul>
-                <% for(let i = 0; i < thoughts.length; i++) { %>
-                    <li class="postTimeline">
-                        <div class="post_body">
-                            <div class="post_header">
-                                <div class="post_headerText">
-                                    <h3>Thought ID: <%= thoughts[i].id_thought %></h3>
+        <div class="feed">
+            <div class="feed_header">
+                <h2>Profile</h2>
+                <h5>Olá, <%= username %>!</h5>
+            </div>
+            <div class="feed_header">
+                <h3>Thoughts:</h3>
+            </div>
+            <div class="postBox">
+                <ul>
+                    <% for(let i = 0; i < thoughts.length; i++) { %>
+                        <li class="postTimeline">
+                            <div class="post_body">
+                                <div class="post_header">
+                                    <div class="post_headerText">
+                                        <h3>Thought ID: <%= thoughts[i].id_thought %></h3>
+                                    </div>
+                                    <div class="postHeader_Description">
+                                        <p><%= thoughts[i].content %></p>
+                                        <sup><%= thoughts[i].created_at%></sup>
+                                    </div>
                                 </div>
-                                <div class="postHeader_Description">
-                                    <p><%= thoughts[i].content %></p>
-                                </div>
+                                <form action="/thought/<%= thoughts[i].id_thought %>" method="get">
+                                    <button class="btn btn-primary w-50 py-1" type="submit">Edit or Delete</button>
+                                </form>
                             </div>
-                            <form action="/thought/<%= thoughts[i].id_thought %>" method="get">
-                                <button class="btn btn-primary w-50 py-1" type="submit">Edit or Delete</button>
-                            </form>
-                        </div>
-                    </li>
-                <% } %>
-            </ul>
+                        </li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+        <div class="inputPost">
+            <form action="/timeline" method="post" id="postForm">
+                <img src="imgs/WhatsApp Image 2024-04-05 at 11.08.49.jpeg" alt="">
+                <input type="text" class="form-control" id="content" name="content" placeholder="Whassup?" required>
+                <button type="submit" class="postBox_post">Post</button>
+            </form>
         </div>
     </div>
 </body>
