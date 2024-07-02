@@ -94,7 +94,7 @@ app.get("/timeline", (req, res) => {
   const selectAllThoughts = `
     SELECT thoughts.*, users.user_name as user_name
     FROM thoughts
-    INNER JOIN users ON thoughts.fk_user = users.id_user
+    INNER JOIN users ON thoughts.fk_user = users.id_user order by created_at desc
   `;
 
   connection.query(selectAllThoughts, (err, data) => {

@@ -70,36 +70,6 @@ html,body{
     padding-right: 20px;
 }
 
-.sidebarOption .profileButton {
-    display: flex;
-    align-items: center;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 10px;
-    color: rgb(45, 121, 189); /* Cor do ícone e do texto */
-    transition: background-color 0.2s ease-out, color 0.2s ease-out;
-}
-
-.sidebarOption .profileButton:hover {
-    background-color: rgb(185, 194, 201);
-    border-radius: 40px;
-    color: #fff; /* Cor do texto ao passar o mouse */
-}
-
-.sidebarOption .material-symbols-outlined {
-    padding: 10px;
-}
-
-.sidebarOption .profileButton h3 {
-    font-weight: 500;
-    font-size: 20px;
-    margin-right: 20px;
-}
-
-.profileButton:focus {
-    outline: none;
-}
 
 /* feed */
 

@@ -16,7 +16,7 @@
         <div class="form-container">
             <p>Thought: "<%= thought.content %>"</p>
             <form action="/update/<%= thought.id_thought %>" method="post" id="update">
-                <input form="update" name="content" class="form-control" placeholder="Update your thought">
+                <input form="update" name="content" class="form-control" placeholder="Update your thought" required>
                 <button type="submit" class="btn btn-primary w-50 py-1">Edit this thought</button>
             </form>
             <form action="/delete/<%= thought.id_thought %>" method="post">
