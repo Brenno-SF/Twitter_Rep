@@ -16,9 +16,11 @@
             <form action="/timeline" method="get">
                 <button class="sidebarButton"> <span class="material-symbols-outlined">home</span> Home</button>
             </form>
-                <button class="sidebarButton active"> <span class="material-symbols-outlined">person</span> Profile</button>                
+            <button class="sidebarButton active"> <span class="material-symbols-outlined">person</span> Profile</button>                
                 <!-- bglh de pesquisar aqui -->
-            <button class="sidebarButton"><span class="material-symbols-outlined">search</span> Search</button>
+            <form action="/search" method="get">
+                <button class="sidebarButton"><span class="material-symbols-outlined">search</span> Search</button>
+            </form>
             <form action="\login" method="get">
                 <button class="sidebarButton"><span class="material-symbols-outlined">logout</span> Logout</button>
             </form>
@@ -27,7 +29,7 @@
         <div class="feed">
             <div class="feed_header">
                 <h2>Profile</h2>
-                <h5>Olá, <%= username %>!</h5>
+                <h5><%= username %></h5>
             </div>
             <div class="feed_header">
                 <h3>Thoughts:</h3>

@@ -11,13 +11,14 @@
 <body class="bSidebar d-flex align-items-center py-4 bg-body-tertiary">
     <div class="container">
         <div class="sidebar">
-            <button class="sidebarButton"> <span class="material-symbols-outlined">home</span> Home</button>
+            <form action="/timeline" method="get">
+                <button class="sidebarButton"> <span class="material-symbols-outlined">home</span> Home</button>
+            </form>
             <form action="/profile" method="get">
                 <button class="sidebarButton"> <span class="material-symbols-outlined">person</span> Profile</button>                
             </form>
             <!-- bglh de pesquisar aqui -->
-            <form action="/search" method="get">
-                 
+            <form action="/search" method="get">   
                 <button class="sidebarButton active"><span class="material-symbols-outlined">search</span> Search</button>
             </form>
             
@@ -28,11 +29,11 @@
 
         <div class="feed">
             <div class="feed_header">
-                <h2>Home</h2>
-                <h5>Olá, <%= data.username %>!</h5>
+                <h2>Search</h2>
+                <h5><%= username%></h5>
             </div>
             <div class="feed_header">
-                <h3>Thoughts:</h3>
+                <h3>Resulting Thoughts:</h3>
             </div>  
             
             <% data.forEach(item => { %>
