@@ -21,6 +21,9 @@
             <form action="/search" method="get">
                 <button class="sidebarButton"><span class="material-symbols-outlined">search</span> Search</button>
             </form>
+            <form action="/chat" method="get">              
+                <button class="sidebarButton"><span class="material-symbols-outlined">Chat</span> Chat</button>
+           </form>
             <form action="\login" method="get">
                 <button class="sidebarButton"><span class="material-symbols-outlined">logout</span> Logout</button>
             </form>
@@ -41,7 +44,7 @@
                             <div class="post_body">
                                 <div class="post_header">
                                     <div class="post_headerText">
-                                        <h3>Thought ID: <%= thoughts[i].id_thought %></h3>
+                                        <h3>Thought:</h3>
                                     </div>
                                     <div class="postHeader_Description">
                                         <p><%= thoughts[i].content %></p>

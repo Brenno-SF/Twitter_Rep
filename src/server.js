@@ -186,3 +186,10 @@ app.get("/search", (request, response) => {
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
+
+
+app.get("/chat", (request, response)=>{
+
+  response.render("chat");
+
+})

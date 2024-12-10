@@ -28,3 +28,12 @@ CREATE TABLE Emails (
 RENAME TABLE Users TO users,
 Thoughts TO thoughts,
 Emails TO emails;
+
+create table Talk (
+    id_talk int PRIMARY KEY auto_increment,
+    id_sender INT NOT NULL,
+    id_receiver INT NOT NULL,
+    Foreign Key (id_sender) REFERENCES Users(id_user),
+    Foreign Key (id_receiver) REFERENCES Users(id_user),
+    sending_time TIMESTAMP);
+SELECT *from Talk
