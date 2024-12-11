@@ -201,3 +201,81 @@ html, body {
 .postTlAvatar {
     padding: 20px;
 }
+
+/* Chat messages */
+.chat_window {
+    border: 1px solid #ccc;
+    height: 300px;
+    overflow-y: auto;
+    padding: 10px;
+    background-color: #1a1a1a;
+    color: #fff;
+}
+
+.chat_message {
+    margin-bottom: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #333;
+}
+
+/* Users list */
+.users_list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.user_item {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.user_item:hover {
+    background-color: #444;
+    color: #fff;
+}
+
+
+.chat_window {
+    flex: 1; /* Preenche todo o espaço disponível */
+    display: flex;
+    
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    max-height: 400px; /* Ajuste conforme necessário */
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #1a1a1a;
+    color: #fff;
+}
+
+/* Estilo base para as mensagens */
+.message {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 10px;
+    max-width: 70%;
+    word-wrap: break-word;
+    display: inline-block;
+}
+
+/* Mensagens enviadas pelo usuário atual */
+.message.sent {
+    background-color: #2092df;
+    align-self: flex-end;
+    text-align: right;
+    color: #fff;
+}
+
+/* Mensagens recebidas de outros usuários */
+.message.received {
+    background-color: #e4e6eb;
+    align-self: flex-start;
+    text-align: left;
+    color: #000;
+}
+

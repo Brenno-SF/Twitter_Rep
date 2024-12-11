@@ -1,5 +1,6 @@
--- Active: 1715561308869@@127.0.0.1@3306@app
-
+-- Active: 1717372720993@@localhost@3306@app
+ --Active: 1715561308869@@127.0.0.1@3306@app
+select *from users;
 use app;
 
 CREATE TABLE Users (
@@ -36,4 +37,11 @@ create table Talk (
     Foreign Key (id_sender) REFERENCES Users(id_user),
     Foreign Key (id_receiver) REFERENCES Users(id_user),
     sending_time TIMESTAMP);
-SELECT *from Talk
+
+create table chats(
+	id_chat int primary key auto_increment,
+	id_user1 int not null,	
+    id_user2 int not null,
+    data_criacao timestamp,
+    foreign key (id_user1) references Users (id_user),
+    foreign key (id_user2) references Users (id_user))

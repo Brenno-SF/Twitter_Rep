@@ -6,6 +6,9 @@ const { Console } = require("console");
 const session = require("express-session");
 const app = express();
 const port = 3357;
+//conexão WebSocket
+const http = require("http");
+const websocket = require("./ws");
 
 //sessão pra salvar os dados
 app.use(
@@ -183,13 +186,49 @@ app.get("/search", (request, response) => {
     });
   });
 });
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+// app.listen(port, () => {
+//   console.log(`Server running at http://localhost:${port}`);
+// });
+
+
+app.get('/chat', (req, res) => {
+  const userId = req.session.userId; // Obter o ID do usuário da sessão
+
+  if (!userId) {
+      return res.redirect('/login'); // Redirecionar se o usuário não estiver logado
+  }
+
+  res.render('chat', {
+      userId: userId, // Passar o ID do usuário para o EJS
+      username: req.session.username, // Opcional: passar o nome do usuário também
+  });
 });
 
 
-app.get("/chat", (request, response)=>{
 
-  response.render("chat");
 
-})
+const server = http.createServer(app);
+
+// Inicializa o WebSocket e passa o servidor HTTP e a conexão do banco
+websocket(server, connection);
+
+server.listen(port, () => {
+    console.log(`Servidor rodando em http://localhost:${port}`);
+});
+
+
+app.get('/users-online', (req, res) => {
+  const currentUserId = req.session.userId; // Supondo que você armazena o ID na sessão
+
+  connection.query(
+      'SELECT id_user, user_name FROM Users WHERE is_online = TRUE AND id_user != ?',
+      [currentUserId], // Exclui o usuário logado
+      (err, rows) => {
+          if (err) {
+              console.error('Erro ao buscar usuários online:', err);
+              return res.status(500).send('Erro ao buscar usuários online');
+          }
+          res.json(rows); // Retorna a lista de usuários online, menos o próprio
+      }
+  );
+});
