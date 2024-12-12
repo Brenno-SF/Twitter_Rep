@@ -69,6 +69,10 @@
             <ul class="users_list">
                 <!-- A lista de usuários online será adicionada aqui -->
             </ul>
+            <div class="users_all">
+                <h3>Todos os Usuários</h3>
+                <ul class="all_users_list"></ul>
+            </div>
         </div>
     </div>
 
@@ -76,56 +80,78 @@
         const socket = new WebSocket('ws://localhost:3357');
         let selectedUserId = null;
     
-        // Exibir a seção do chat
+        // Mostrar a seção do chat
         function showChatSection() {
             document.getElementById("startMessage").classList.add("d-none");
             document.getElementById("chatSection").classList.remove("d-none");
         }
     
-        // Enviar login quando a conexão for aberta
+        // Enviar login quando a conexão WebSocket é aberta
         socket.onopen = () => {
-            socket.send(JSON.stringify({ type: "login", userId: <%= userId %> })); // Passe o userId do servidor
+            const currentUserId = <%= userId %>; // ID do usuário logado vindo do servidor
+            socket.send(JSON.stringify({ type: "login", userId: currentUserId }));
         };
     
-        // Enviar mensagens do formulário de chat
         document.getElementById('chatForm').addEventListener('submit', function (event) {
             event.preventDefault();
-    
+
             const messageInput = document.getElementById('message');
             const messageText = messageInput.value.trim();
-    
+
             if (messageText && selectedUserId) {
+                const timestamp = new Date().toISOString(); // Gerar o timestamp no formato ISO
+
                 const messageData = {
                     type: "message",
                     userId: <%= userId %>, // ID do usuário logado
-                    receiverId: selectedUserId, // ID do usuário destinatário
-                    message: messageText
+                    chatId: currentChatId,
+                    receiverId: selectedUserId, // ID do destinatário
+                    message: messageText,
+                    timestamp: timestamp
                 };
-    
-                // Enviar mensagem
+
+                // Enviar a mensagem via WebSocket
                 socket.send(JSON.stringify(messageData));
-    
+
                 // Adicionar mensagem localmente como enviada
-                appendMessageToChatWindow("Você", messageData.message, true);
-    
+                appendMessageToChatWindow("Você", messageData.message, true, timestamp);
+
                 // Limpar o campo de texto
                 messageInput.value = '';
             }
         });
+
     
         socket.onmessage = function (event) {
-        const messageData = JSON.parse(event.data);
+            const messageData = JSON.parse(event.data);
 
-        // Identificar se a mensagem foi enviada pelo usuário atual
-        const isSentByCurrentUser = messageData.userId === <%= userId %>;
+            if (messageData.type === "chat_history") {
+                // Exibir histórico de mensagens
+                const chatWindow = document.getElementById('chatWindow');
+                chatWindow.innerHTML = ''; // Limpar a janela do chat
+                currentChatId = messageData.chatId;
 
-        // Adicionar mensagem ao chat
-        appendMessageToChatWindow(
-            isSentByCurrentUser ? "Você" : messageData.senderName || "Desconhecido",
-            messageData.message,
-            isSentByCurrentUser
-        );
-    };
+                // Processar cada mensagem do histórico
+                messageData.messages.forEach(msg => {
+                    appendMessageToChatWindow(
+                        msg.id_sender === <%= userId %> ? "Você" : msg.senderName || "Desconhecido", // Determina o nome
+                        msg.message,
+                        msg.id_sender === <%= userId %>, 
+                        msg.sending_time,
+                        
+                    );
+                });
+            } else if (messageData.type === "message") {
+                // Adicionar mensagens em tempo real
+                const isSentByCurrentUser = messageData.userId === <%= userId %>;
+                appendMessageToChatWindow(
+                    isSentByCurrentUser ? "Você" : messageData.senderName || "Desconhecido",
+                    messageData.message,
+                    isSentByCurrentUser,
+                    messageData.timestamp
+                );
+            }
+        };
 
     
         // Atualizar lista de usuários online
@@ -135,6 +161,41 @@
                 .then(users => {
                     const usersList = document.querySelector('.users_list');
                     usersList.innerHTML = '';
+    
+                    users.forEach(user => {
+                        const userItem = document.createElement('li');
+                        userItem.textContent = user.user_name;
+                        userItem.classList.add('user_item');
+                        userItem.dataset.userId = user.id_user;
+    
+                        // Adicionar evento de clique para iniciar ou acessar chat
+                        userItem.addEventListener('click', () => {
+                            selectedUserId = user.id_user;
+                            showChatSection();
+    
+                            // Enviar solicitação para iniciar ou acessar o chat
+                            socket.send(JSON.stringify({
+                                type: "start_chat",
+                                userId: <%= userId %>, // ID do usuário logado
+                                otherUserId: selectedUserId // ID do usuário selecionado
+                            }));
+                        });
+    
+                        usersList.appendChild(userItem);
+                    });
+                })
+                .catch(error => console.error('Erro ao buscar usuários online:', error));
+        }
+        // Atualizar lista de usuários online periodicamente
+        setInterval(fetchUsersOnline, 1000); 
+        fetchUsersOnline();
+
+        function fetchAllUsers() {
+            fetch('/all-users')
+                .then(response => response.json())
+                .then(users => {
+                    const allUsersList = document.querySelector('.all_users_list');
+                    allUsersList.innerHTML = '';
 
                     users.forEach(user => {
                         const userItem = document.createElement('li');
@@ -142,44 +203,83 @@
                         userItem.classList.add('user_item');
                         userItem.dataset.userId = user.id_user;
 
-                        // Adiciona evento de clique para selecionar destinatário
+                        // Adicionar evento de clique para iniciar ou acessar chat
                         userItem.addEventListener('click', () => {
                             selectedUserId = user.id_user;
                             showChatSection();
+
+                            // Enviar solicitação para iniciar ou acessar o chat
+                            socket.send(JSON.stringify({
+                                type: "start_chat",
+                                userId: <%= userId %>, // ID do usuário logado
+                                otherUserId: selectedUserId // ID do usuário selecionado
+                            }));
                         });
 
-                        usersList.appendChild(userItem);
+                        allUsersList.appendChild(userItem);
                     });
                 })
-                .catch(error => console.error('Erro ao buscar usuários online:', error));
+                .catch(error => console.error('Erro ao buscar todos os usuários:', error));
         }
 
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchUsersOnline();
+            fetchAllUsers();
+        });
+
+        // Atualizar lista de usuários existentes periodicamente
+        setInterval(fetchAllUsers, 30000); // Atualiza a cada 30 segundos
+
     
-        // Atualiza a lista de usuários online a cada 10 segundos
-        setInterval(fetchUsersOnline, 1000);
-        fetchUsersOnline();
-    
-        // Função para adicionar mensagens ao chat
-        function appendMessageToChatWindow(user, message, isSentByCurrentUser) {
+        // Função para adicionar mensagens à janela do chat
+        function appendMessageToChatWindow(user, message, isSentByCurrentUser, timestamp) {
             const chatWindow = document.getElementById('chatWindow');
+            const messageWrapper = document.createElement('div'); // Wrapper para a mensagem e o horário
+
+            // Adicionar mensagem
             const messageElement = document.createElement('div');
-    
             messageElement.textContent = `${user}: ${message}`;
             messageElement.classList.add('message');
-    
+
             // Adicionar classes para alinhamento
             if (isSentByCurrentUser) {
                 messageElement.classList.add('sent');
             } else {
                 messageElement.classList.add('received');
             }
-    
-            chatWindow.appendChild(messageElement);
-    
+
+            // Adicionar horário
+            const timestampElement = document.createElement('small');
+            timestampElement.textContent = formatTimestamp(timestamp); // Formata a data e a hora
+            timestampElement.classList.add('timestamp');
+
+            // Adicionar os elementos ao wrapper
+            messageWrapper.appendChild(messageElement);
+            messageWrapper.appendChild(timestampElement);
+            messageWrapper.classList.add('message-wrapper');
+
+            // Adicionar o wrapper à janela do chat
+            chatWindow.appendChild(messageWrapper);
+
             // Rolar o chat para mostrar a mensagem mais recente
             chatWindow.scrollTop = chatWindow.scrollHeight;
         }
+
+        function formatTimestamp(timestamp) {
+            const date = new Date(timestamp);
+            const options = {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit"
+            };
+            return date.toLocaleString("pt-BR", options); // Formata para DD/MM/AAAA HH:MM
+        }
+
     </script>
+    
     
 
 </body>

@@ -91,7 +91,7 @@ html, body {
     overflow-y: scroll;
 }
 .feed_header {
-    position: sticky;
+    
     top: 0;   
     z-index: 100;
     border: 1px solid var(--back);
@@ -132,6 +132,7 @@ html, body {
     flex: 0.4;  /* InputPost ocupa 40% do container */
     display: flex;
     padding: 20px;
+    align-items: end;
 }
 
 .inputPost input {
@@ -219,11 +220,11 @@ html, body {
     background-color: #333;
 }
 
-/* Users list */
-.users_list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.users_list,
+.all_users_list {
+    list-style: none; /* Remove os marcadores */
+    padding: 0; /* Remove o recuo padrão */
+    margin: 0; /* Remove a margem padrão */
 }
 
 .user_item {
@@ -236,12 +237,14 @@ html, body {
     background-color: #444;
     color: #fff;
 }
-
+.chatSection{
+    display: block;
+}
 
 .chat_window {
     flex: 1; /* Preenche todo o espaço disponível */
-    display: flex;
     
+    display: flex;
     flex-direction: column;
     gap: 10px;
     padding: 10px;
@@ -254,28 +257,47 @@ html, body {
 }
 
 /* Estilo base para as mensagens */
+
 .message {
     padding: 10px;
-    margin: 5px;
-    border-radius: 10px;
-    max-width: 70%;
+    border-radius: 5px;
+    max-width: 60%;
     word-wrap: break-word;
-    display: inline-block;
 }
 
 /* Mensagens enviadas pelo usuário atual */
-.message.sent {
+.sent {
     background-color: #2092df;
+    border-radius: 10px;
     align-self: flex-end;
     text-align: right;
     color: #fff;
 }
 
 /* Mensagens recebidas de outros usuários */
-.message.received {
+.received {
     background-color: #e4e6eb;
+    border-radius: 10px;
     align-self: flex-start;
     text-align: left;
     color: #000;
 }
+
+.message-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+}
+
+
+
+.timestamp {
+    display: block;
+    font-size: 0.8em;
+    size: 0.4%;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    margin-top: 5px;
+}
+
 

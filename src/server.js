@@ -232,3 +232,16 @@ app.get('/users-online', (req, res) => {
       }
   );
 });
+app.get('/all-users', (req, res) => {
+  connection.query(
+      'SELECT id_user, user_name FROM Users order by user_name asc',
+      (err, results) => {
+          if (err) {
+              console.error('Erro ao buscar todos os usuários:', err);
+              return res.status(500).json({ error: 'Erro ao buscar usuários.' });
+          }
+          res.json(results);
+      }
+  );
+});
+
