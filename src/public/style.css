@@ -159,10 +159,10 @@ html, body {
 }
 
 .postBox_post:hover {
-    transition: 100ms ease-in;
-    width: 85px;
-    height: 45px;
-    transition: 100ms ease-out;
+    background-color: rgb(185, 194, 201);
+    border-radius: 40px;
+    color: rgb(45, 121, 189);
+    transition: color 100ms ease-out; 
 }
 
 /* post */
