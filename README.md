@@ -1,3 +1,6 @@
+# Alunos:
+## Maykon de Souza Santos, Gustavo Barreto Dos Santos Costa, Brenno Santos Florêncio.
+
 # Modelagem Conceitual
 
 Nessa rede social, há usuários. Cada usuário é identificado por um ID numérico, possui um username único, senha para utilização da conta, além de ter a possibilidade de cadastrar diversos emails para recuperação da conta.
