@@ -261,8 +261,15 @@ const clients = new Map();
 
 ## Telas do projeto
 
-- **Tela de Pesquisa - Twitte:**
-![Tela de pesquisa - twitte](imgs/ps_twt.jpg)
+---
+
+- **Tela de login:**
+![Login - twitter](imgs/login_twt.jpg)
+
+---
+
+- **Tela de registro:**
+![Register - twitter](imgs/register_twt.jpg)
 
 ---
 
@@ -276,13 +283,8 @@ const clients = new Map();
 
 ---
 
-- **Tela de registro:**
-![Register - twitter](imgs/register_twt.jpg)
-
----
-
-- **Tela de login:**
-![Login - twitter](imgs/login_twt.jpg)
+- **Tela de Pesquisa - Twitte:**
+![Tela de pesquisa - twitte](imgs/ps_twt.jpg)
 
 ---
 
